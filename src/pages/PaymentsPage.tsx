@@ -19,10 +19,12 @@ const DEFAULT_FORM: OrderForm = {
 
 type PaymentsPageProps = {
   onCreatedCheckout: (sessionUrl: string) => void
+  initialValues?: Partial<OrderForm>
+  restauranteName?: string
 }
 
-function PaymentsPage({ onCreatedCheckout }: PaymentsPageProps) {
-  const [form, setForm] = useState<OrderForm>(DEFAULT_FORM)
+function PaymentsPage({ onCreatedCheckout, initialValues, restauranteName }: PaymentsPageProps) {
+  const [form, setForm] = useState<OrderForm>({ ...DEFAULT_FORM, ...initialValues })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
 
@@ -62,13 +64,19 @@ function PaymentsPage({ onCreatedCheckout }: PaymentsPageProps) {
   return (
     <main className="page-shell">
       <section className="surface card">
-        <div className="eyebrow">Stripe Checkout demo</div>
-        <h1>Pedido de prueba para restaurante</h1>
+        <div className="eyebrow">
+          {restauranteName ? 'Confirmación de pedido' : 'Stripe Checkout demo'}
+        </div>
+        <h1>{restauranteName ? `Pagar en ${restauranteName}` : 'Pedido de prueba para restaurante'}</h1>
         <p className="lead">
-          Crea un pedido mínimo, envíalo al backend y redirige a Stripe Checkout.
+          {restauranteName
+            ? 'Revisa tu pedido y confirma para pagar con Stripe.'
+            : 'Crea un pedido mínimo, envíalo al backend y redirige a Stripe Checkout.'}
         </p>
 
-        <p className="hint">Backend configurado en {ApiPaymentService.getBaseUrl()}</p>
+        {!restauranteName && (
+          <p className="hint">Backend configurado en {ApiPaymentService.getBaseUrl()}</p>
+        )}
 
         <form className="order-form" onSubmit={handleSubmit}>
           <label>
