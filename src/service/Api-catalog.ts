@@ -205,7 +205,7 @@ const MOCK_RESTAURANTES: Restaurante[] = [
   },
 ];
 
-const API_BASE = '/api/v1/restaurantes';
+const API_BASE = 'https://arcn-catalogrestaurantsservice.onrender.com/api/v1/restaurantes';
 
 class ApiCatalogService {
   static getBaseUrl() {

@@ -19,7 +19,7 @@ export type ConfirmPaymentResponse = {
   summary?: unknown
 }
 
-const API_BASE_URL = 'http://localhost:8081/api/stripe'
+const API_BASE_URL = 'https://arcn-ordermanagementservice.onrender.com/api/stripe'
 
 class ApiPaymentService {
   static getBaseUrl() {
